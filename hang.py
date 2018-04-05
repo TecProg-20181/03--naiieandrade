@@ -70,6 +70,18 @@ def count_letters(available, word, option):
         return available
 
 
+def show_hide_letters(secret_word, letters_guessed):
+    guessed = get_guessed_word()
+
+    for letter in secret_word:
+        if letter in letters_guessed:
+            guessed += letter
+        else:
+            guessed += '_ '
+
+    return guessed
+
+
 def hangman(secret_word):
 
     guesses = 8
@@ -85,46 +97,31 @@ def hangman(secret_word):
 
     count = count_letters(available, secret_word, option_count_letters)
 
-    print 'there are ', count, 'letters differents.'
+    print 'There are ', count, 'letters differents.'
 
     while is_word_guessed(secret_word, letters_guessed) is False and guesses > 0:
         print 'You have ', guesses, 'guesses left.'
 
-        available_t = count_letters(available, letters_guessed, option_available_letters)
+        available = count_letters(available, letters_guessed, option_available_letters)
 
-        print 'Available letters', available_t
+        print 'Available letters', available
         letter = raw_input('Please guess a letter: ')
         if letter in letters_guessed:
 
-            guessed = get_guessed_word()
-            for letter in secret_word:
-                if letter in letters_guessed:
-                    guessed += letter
-                else:
-                    guessed += '_ '
+            guessed = show_hide_letters(secret_word, letters_guessed)
 
             print 'Oops! You have already guessed that letter: ', guessed
         elif letter in secret_word:
             letters_guessed.append(letter)
 
-            guessed = get_guessed_word()
-            for letter in secret_word:
-                if letter in letters_guessed:
-                    guessed += letter
-                else:
-                    guessed += '_ '
+            guessed = show_hide_letters(secret_word, letters_guessed)
 
             print 'Good Guess: ', guessed
         else:
             guesses -= 1
             letters_guessed.append(letter)
 
-            guessed = get_guessed_word()
-            for letter in secret_word:
-                if letter in letters_guessed:
-                    guessed += letter
-                else:
-                    guessed += '_ '
+            guessed = show_hide_letters(secret_word, letters_guessed)
 
             print 'Oops! That letter is not in my word: ',  guessed
         print '------------'
