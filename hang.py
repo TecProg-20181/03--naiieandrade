@@ -55,7 +55,7 @@ def get_available_letters():
     return available
 
 
-def count_letters(available, word, option):
+def remove_letters(available, word):
     count_different_letters_in_word = 0
 
     for letter in available:
@@ -64,10 +64,8 @@ def count_letters(available, word, option):
             available = available.replace(letter, '')
         else:
             pass
-    if option is 1:
-        return count_different_letters_in_word
-    elif option is 2:
-        return available
+    dic = {'count': count_different_letters_in_word, 'available': available}
+    return dic
 
 
 def show_hide_letters(secret_word, letters_guessed):
@@ -86,8 +84,6 @@ def hangman(secret_word):
 
     guesses = 8
     letters_guessed = []
-    option_count_letters = 1
-    option_available_letters = 2
 
     print 'Welcome to the game, Hangam!'
     print 'I am thinking of a word that is', len(secret_word), ' letters long.'
@@ -95,14 +91,14 @@ def hangman(secret_word):
 
     available = get_available_letters()
 
-    count = count_letters(available, secret_word, option_count_letters)
+    count = remove_letters(available, secret_word)["count"]
 
     print 'There are ', count, 'letters differents.'
 
     while is_word_guessed(secret_word, letters_guessed) is False and guesses > 0:
         print 'You have ', guesses, 'guesses left.'
 
-        available = count_letters(available, letters_guessed, option_available_letters)
+        available = remove_letters(available, letters_guessed)["available"]
 
         print 'Available letters', available
         letter = raw_input('Please guess a letter: ')
