@@ -46,30 +46,53 @@ def get_guessed_word():
 
 
 def get_available_letters():
-    import string
-    # 'abcdefghijklmnopqrstuvwxyz'
+    """
+    Importing letter of alphabet
+    'abcdefghijklmnopqrstuvwxyz'
+    """
     available = string.ascii_lowercase
 
     return available
+
+
+def count_letters(available, word, option):
+    count_different_letters_in_word = 0
+
+    for letter in available:
+        if letter in word:
+            count_different_letters_in_word += 1
+            available = available.replace(letter, '')
+        else:
+            pass
+    if option is 1:
+        return count_different_letters_in_word
+    elif option is 2:
+        return available
 
 
 def hangman(secret_word):
 
     guesses = 8
     letters_guessed = []
+    option_count_letters = 1
+    option_available_letters = 2
+
     print 'Welcome to the game, Hangam!'
     print 'I am thinking of a word that is', len(secret_word), ' letters long.'
     print '-------------'
 
+    available = get_available_letters()
+
+    count = count_letters(available, secret_word, option_count_letters)
+
+    print 'there are ', count, 'letters differents.'
+
     while is_word_guessed(secret_word, letters_guessed) is False and guesses > 0:
         print 'You have ', guesses, 'guesses left.'
 
-        available = get_available_letters()
-        for letter in available:
-            if letter in letters_guessed:
-                available = available.replace(letter, '')
+        available_t = count_letters(available, letters_guessed, option_available_letters)
 
-        print 'Available letters', available
+        print 'Available letters', available_t
         letter = raw_input('Please guess a letter: ')
         if letter in letters_guessed:
 
