@@ -76,9 +76,9 @@ def show_hide_letters(secret_word, letters_guessed):
 def change_word():
     # print 'Do you want to change a word? (y/n)'
     option = raw_input('Do you want to change a word? (y/n) ')
-    if option is 'y' or 'Y':
+    if option == 'y':  # or 'Y':
         return True
-    elif option is 'n' or 'N':
+    elif option == 'n':
         return False
 
 
@@ -106,6 +106,24 @@ def show_available_letters(available):
     return letter
 
 
+def option_to_change_word(secret_word, count):
+
+    if count > 8:
+        while change_word() is True:
+            secret_word = load_words().lower()
+            hangman(secret_word)
+            # print change_word()
+        else:
+            pass
+        # else:
+
+
+def get_count():
+    available = get_available_letters()
+    count = remove_letters(available, secret_word)["count"]
+    return count
+
+
 def hangman(secret_word):
 
     guesses = 8
@@ -119,19 +137,7 @@ def hangman(secret_word):
 
     count = remove_letters(available, secret_word)["count"]
     print 'There are ', count, 'letters differents.'
-    """
-    if count > guesses:
-        # while change_word
-        change_word()
-        while change_word() is True:
-            secret_word = load_words().lower()
-            hangman(secret_word)
-            print '-------------'
-            print change_word()
-        else:
-            pass
-        # else:
-    """
+    option_to_change_word(secret_word, count)
 
     while is_word_guessed(secret_word, letters_guessed) is False and guesses > 0:
         print 'You have ', guesses, 'guesses left.'
