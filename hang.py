@@ -10,11 +10,8 @@ def load_words():
     take a while to finish.
     """
     print "Loading word list from file..."
-    # inFile: file
     inFile = open(WORDLIST_FILENAME, 'r', 0)
-    # line: string
     line = inFile.readline()
-    # wordlist: list of strings
     wordlist = string.split(line)
     print "  ", len(wordlist), "words loaded."
     return random.choice(wordlist)
@@ -74,9 +71,9 @@ def show_hide_letters(secret_word, letters_guessed):
 
 
 def change_word():
-    # print 'Do you want to change a word? (y/n)'
+
     option = raw_input('Do you want to change a word? (y/n) ')
-    if option == 'y':  # or 'Y':
+    if option == 'y':
         return True
     elif option == 'n':
         return False
@@ -106,16 +103,17 @@ def show_available_letters(available):
     return letter
 
 
-def option_to_change_word(secret_word, count):
+def option_to_change_word(secret_word, count, continue_game):
 
-    if count > 8:
+    if count > 8 and continue_game is True:
         while change_word() is True:
             secret_word = load_words().lower()
             hangman(secret_word)
-            # print change_word()
+            # continue_game = False
+            return False
         else:
             pass
-        # else:
+        # return False
 
 
 def get_count():
@@ -137,7 +135,8 @@ def hangman(secret_word):
 
     count = remove_letters(available, secret_word)["count"]
     print 'There are ', count, 'letters differents.'
-    option_to_change_word(secret_word, count)
+    continue_game = True
+    continue_game = option_to_change_word(secret_word, count, continue_game)
 
     while is_word_guessed(secret_word, letters_guessed) is False and guesses > 0:
         print 'You have ', guesses, 'guesses left.'
