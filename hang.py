@@ -17,9 +17,13 @@ class Word:
         try:
             in_file = open(WORDLIST_FILENAME, 'r')
             line = in_file.readline()
-            wordlist = string.split(line)
-            print "  ", len(wordlist), "words loaded."
-            return wordlist
+            while line != '':
+                wordlist = string.split(line)
+                print "  ", len(wordlist), "words loaded."
+                return wordlist
+            else:
+                print "File is empty."
+                sys.exit()
         except IOError:
             print "Error: File does not appear to exist."
             sys.exit()
@@ -27,7 +31,13 @@ class Word:
     def return_word(self):
         """Choose the word randomly from wordlist"""
         wordlist = self.load_words()
-        word = random.choice(wordlist)
+        try:
+            word = random.choice(wordlist)
+        except TypeError:
+            print "There is no word loaded."
+            sys.exit()
+        assert word != ''
+        assert len(word) >= 1
         return word
 
 
