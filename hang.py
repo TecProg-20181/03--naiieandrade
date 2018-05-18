@@ -35,13 +35,6 @@ def is_word_guessed(secret_word, letters_guessed):
     return True
 
 
-def get_guessed_word():
-
-    guessed = ''
-
-    return guessed
-
-
 def get_available_letters():
     """Importing letter of alphabet
     'abcdefghijklmnopqrstuvwxyz'
@@ -69,7 +62,7 @@ def remove_letters(available, word):
 def show_hide_letters(secret_word, letters_guessed):
     """Show letters guessed and hide other letters.
     Parameters: secret_word:string, letters_guessed:list -> return guessed:string"""
-    guessed = get_guessed_word()
+    guessed = ''
 
     for letter in secret_word:
         if letter in letters_guessed:
@@ -83,6 +76,9 @@ def show_hide_letters(secret_word, letters_guessed):
 def change_word():
 
     option = raw_input('Do you want to change a word? (y/n) ')
+    while option not in {'y', 'n'}:
+        print 'Invalid input. Try again.'
+        option = raw_input('Do you want to change a word? (y/n) ')
     if option == 'y':
         return True
     elif option == 'n':
