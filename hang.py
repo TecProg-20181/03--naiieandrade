@@ -1,5 +1,6 @@
 import random
 import string
+import sys
 
 WORDLIST_FILENAME = "palavras.txt"
 
@@ -94,6 +95,8 @@ class Game(object):
             print 'Good Guess: ', guessed
         elif letter == 'tip':
             pass
+        elif letter == 'exit':
+            pass
         else:
             guesses -= 1
             letters_guessed.append(letter)
@@ -115,6 +118,9 @@ class Game(object):
             else:
                 if letter == 'tip':
                     break
+                elif letter == 'exit':
+                    print 'Goodbye! See u later (:'
+                    sys.exit(0)
                 print '!!! Please enter only one letter'
         return letter
 
@@ -164,6 +170,7 @@ class Game(object):
         print 'Welcome to the game, Hangam!'
         print 'I am thinking of a word that is', len(secret_word), ' letters long.'
         print 'If you want a tip, write tip'
+        print 'If you want exit, write exit'
         print '-------------'
 
     def hangman(self):
