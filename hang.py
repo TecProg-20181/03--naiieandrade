@@ -14,11 +14,15 @@ class Word:
         take a while to finish.
         """
         print "Loading word list from file..."
-        in_file = open(WORDLIST_FILENAME, 'r')
-        line = in_file.readline()
-        wordlist = string.split(line)
-        print "  ", len(wordlist), "words loaded."
-        return wordlist
+        try:
+            in_file = open(WORDLIST_FILENAME, 'r')
+            line = in_file.readline()
+            wordlist = string.split(line)
+            print "  ", len(wordlist), "words loaded."
+            return wordlist
+        except IOError:
+            print "Error: File does not appear to exist."
+            sys.exit()
 
     def return_word(self):
         """Choose the word randomly from wordlist"""
