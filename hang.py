@@ -89,7 +89,7 @@ def while_guesses_is_greater(secret_word, letters_guessed,
         letters_guessed.append(letter)
         guessed = show_hide_letters(secret_word, letters_guessed)
         print 'Good Guess: ', guessed
-    elif letter == 'tip' or letter == 'TIP':
+    elif letter == 'tip':
         pass
     else:
         guesses -= 1
@@ -100,10 +100,18 @@ def while_guesses_is_greater(secret_word, letters_guessed,
     return guesses
 
 
-def show_available_letters(available):
+def get_input_letter(available):
 
-    print 'Available letters', available
-    letter = raw_input('Please guess a letter: ')
+    while True:
+        print 'Available letters', available
+        letter = raw_input('Please guess a letter: ')
+        letter = letter.lower()
+        if len(letter) == 1:
+            if letter in string.letters:
+                break
+            print '!!! Please enter only letters'
+        else:
+            print '!!! Please enter only one letter'
     return letter
 
 
@@ -122,7 +130,7 @@ def option_to_change_word(secret_word, count):
 
 
 def show_tip(letter, available):
-    if letter == 'tip' or letter == 'TIP':
+    if letter == 'tip':
         count = remove_letters(available, secret_word)["count"]
         print 'There are ', count, 'letters differents.'
         option_to_change_word(secret_word, count)
@@ -138,8 +146,7 @@ def guess_the_word(secret_word):
         print 'You have ', guesses, 'guesses left.'
 
         available = remove_letters(available, letters_guessed)["available"]
-        print 'Available letters', available
-        letter = raw_input('Please guess a letter: ')
+        letter = get_input_letter(available)
         show_tip(letter, available)
 
         guesses = while_guesses_is_greater(secret_word, letters_guessed, guesses, available, letter)
@@ -156,7 +163,7 @@ def guess_the_word(secret_word):
 def show_size_secret_word(secret_word):
     print 'Welcome to the game, Hangam!'
     print 'I am thinking of a word that is', len(secret_word), ' letters long.'
-    print 'If you want a tip, write tip or TIP'
+    print 'If you want a tip, write tip'
     print '-------------'
 
 
