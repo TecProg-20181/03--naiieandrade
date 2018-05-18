@@ -35,15 +35,6 @@ def is_word_guessed(secret_word, letters_guessed):
     return True
 
 
-def get_available_letters():
-    """Importing letter of alphabet
-    'abcdefghijklmnopqrstuvwxyz'
-    """
-    available = string.ascii_lowercase
-
-    return available
-
-
 def remove_letters(available, word):
     """Remove repeated letters and count different letters.
     Parameters: available: , word:string -> return dictionary[integer, ]"""
@@ -61,7 +52,8 @@ def remove_letters(available, word):
 
 def show_hide_letters(secret_word, letters_guessed):
     """Show letters guessed and hide other letters.
-    Parameters: secret_word:string, letters_guessed:list -> return guessed:string"""
+    Parameters: secret_word:string, letters_guessed:list
+    return guessed:string"""
     guessed = ''
 
     for letter in secret_word:
@@ -76,9 +68,11 @@ def show_hide_letters(secret_word, letters_guessed):
 def change_word():
 
     option = raw_input('Do you want to change a word? (y/n) ')
+    option = option.lower()
     while option not in {'y', 'n'}:
         print 'Invalid input. Try again.'
         option = raw_input('Do you want to change a word? (y/n) ')
+        option = option.lower()
     if option == 'y':
         return True
     elif option == 'n':
@@ -137,7 +131,8 @@ def show_tip(letter, available):
 def guess_the_word(secret_word):
     guesses = 8
     letters_guessed = []
-    available = get_available_letters()
+    # Importing letter of alphabet 'abcdefghijklmnopqrstuvwxyz'
+    available = string.ascii_lowercase
 
     while is_word_guessed(secret_word, letters_guessed) is False and guesses > 0:
         print 'You have ', guesses, 'guesses left.'
