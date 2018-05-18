@@ -9,7 +9,7 @@ def load_words():
     take a while to finish.
     """
     print "Loading word list from file..."
-    in_file = open(WORDLIST_FILENAME, 'r', 0)
+    in_file = open(WORDLIST_FILENAME, 'r')
     line = in_file.readline()
     wordlist = string.split(line)
     print "  ", len(wordlist), "words loaded."
@@ -111,6 +111,8 @@ def get_input_letter(available):
                 break
             print '!!! Please enter only letters'
         else:
+            if letter == 'tip':
+                break
             print '!!! Please enter only one letter'
     return letter
 
@@ -132,7 +134,7 @@ def option_to_change_word(secret_word, count):
 def show_tip(letter, available):
     if letter == 'tip':
         count = remove_letters(available, secret_word)["count"]
-        print 'There are ', count, 'letters differents.'
+        print '<o/      There are ', count, 'letters differents.'
         option_to_change_word(secret_word, count)
 
 
