@@ -4,23 +4,26 @@ import string
 WORDLIST_FILENAME = "palavras.txt"
 
 
-def load_words():
-    """Depending on the size of the word list, this function may
-    take a while to finish.
-    """
-    print "Loading word list from file..."
-    in_file = open(WORDLIST_FILENAME, 'r')
-    line = in_file.readline()
-    wordlist = string.split(line)
-    print "  ", len(wordlist), "words loaded."
-    return wordlist
+class Word:
+    def __init__(self):
+        self.word = self.load_words()
 
+    def load_words(self):
+        """Depending on the size of the word list, this function may
+        take a while to finish.
+        """
+        print "Loading word list from file..."
+        in_file = open(WORDLIST_FILENAME, 'r')
+        line = in_file.readline()
+        wordlist = string.split(line)
+        print "  ", len(wordlist), "words loaded."
+        return wordlist
 
-def return_word():
-    """Choose the word randomly from wordlist"""
-    wordlist = load_words()
-    word = random.choice(wordlist)
-    return word
+    def return_word(self):
+        """Choose the word randomly from wordlist"""
+        wordlist = self.load_words()
+        word = random.choice(wordlist)
+        return word
 
 
 def is_word_guessed(secret_word, letters_guessed):
@@ -120,10 +123,11 @@ def get_input_letter(available):
 def option_to_change_word(secret_word, count):
     """If size of word is bigger than guesses, ask if want to change a word.
     Parameters: secret_word:string, count:integer"""
+    word = Word()
     if count > 8:
         if change_word() is True:
             print '####################'
-            secret_word = return_word().lower()
+            secret_word = word.return_word().lower()
             show_size_secret_word(secret_word)
             guess_the_word(secret_word)
             exit()
@@ -175,5 +179,6 @@ def hangman(secret_word):
     guess_the_word(secret_word)
 
 
-secret_word = return_word().lower()
+word = Word()
+secret_word = word.return_word().lower()
 hangman(secret_word)
