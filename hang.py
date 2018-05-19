@@ -1,6 +1,7 @@
 import random
 import string
 import sys
+import logging
 
 WORDLIST_FILENAME = "palavras.txt"
 
@@ -23,6 +24,7 @@ class Word:
                 return wordlist
             else:
                 print "File is empty."
+                logging.warning('Force exit')
                 sys.exit()
         except IOError:
             print "Error: File does not appear to exist."
